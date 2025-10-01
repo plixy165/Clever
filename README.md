@@ -7,7 +7,7 @@
 
 
   <hr />
-  DogeUB (Doge Unblocker) version 5 is finally here!
+  aa (Doge Unblocker) version 5 is finally here!
 
   
   <br />
@@ -20,7 +20,7 @@
 
 ## Overview
 
-DogeUB is a modern web proxy frontend and internet browsing hub, allowing you to browse the web anonymously while providing a full suite of apps and games, built with [React](https://github.com/facebook/react).
+aa is a modern web proxy frontend and internet browsing hub, allowing you to browse the web anonymously while providing a full suite of apps and games, built with [React](https://github.com/facebook/react).
 
 > [!IMPORTANT]
 > Please consider starring our repository if you are forking it!
