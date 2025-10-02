@@ -5,6 +5,7 @@ import {
   navScaleConfig,
   searchConfig,
   prConfig,
+  designConfig
 } from '/src/utils/config';
 
 export const privacyConfig = ({ options, updateOption, openPanic }) => ({
@@ -76,6 +77,14 @@ export const customizeConfig = ({ options, updateOption }) => ({
     action: (a) => updateOption(a),
   },
   2: {
+    name: 'Background Design',
+    desc: 'Customize the site\'s background design.',
+    config: designConfig,
+    value: find(designConfig, (c) => c.value?.bgDesign === options.bgDesign, 0),
+    type: 'select',
+    action: (a) => updateOption(a),
+  },
+  3: {
     name: 'Apps per Page',
     desc: 'Number of apps to show per page ("All" will show everything).',
     config: appsPerPageConfig,
@@ -83,14 +92,14 @@ export const customizeConfig = ({ options, updateOption }) => ({
     type: 'select',
     action: (a) => updateOption(a),
   },
-  3: {
+  4: {
     name: 'Tabs Bar',
     desc: 'Show the tabs bar, allowing you to open multiple sites when browsing.',
     value: options.showTb ?? true,
     type: 'switch',
     action: (b) => setTimeout(() => updateOption({ showTb: b }), 100),
   },
-  4: {
+  5: {
     name: 'Navigation Scale',
     desc: 'Scale navigation bar size (logo & font) globally.',
     config: navScaleConfig,
@@ -98,7 +107,7 @@ export const customizeConfig = ({ options, updateOption }) => ({
     type: 'select',
     action: (a) => updateOption(a),
   },
-  5: {
+  6: {
     name: 'Donation button',
     desc: 'Toggle whether you want the "Support us" button to show.',
     value: options.donationBtn ?? true,

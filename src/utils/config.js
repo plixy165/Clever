@@ -131,7 +131,7 @@ export const themeConfig = [
       switchEnabledColor: '#3b3b44',
       bgColor: '#0b0b0e',
       bodyText: '#e5e7eb',
-      urlBarBg: '#151517',
+      urlBarBg: '#1c1c1c',
       urlBarText: '#f3f4f6',
       tabBarBg: '#121214',
       tabBarBorder: '#27272a',
@@ -152,6 +152,45 @@ export const themeConfig = [
       themeName: 'darkTheme',
     },
   },
+  {
+  option: 'Stellar',
+  value: {
+    theme: 'stellar',
+    type: 'dark',
+    settingsContainerColor: '#1b1d2a',
+    navItemActive: '#9db4ff',
+    settingsSearchBar: '#232538',
+    settingsPanelItemBackgroundColor: '#2d2f44',
+    settingsDropdownColor: '#181a26',
+    siteTextColor: '#d6daff',
+    bgDesignColor: '127, 127, 127',
+    glowWrapperColor: '136, 169, 255',
+    switchColor: '#25273a',
+    switchEnabledColor: '#5560a4',
+    bgColor: '#0a0b14',
+    bodyText: '#d6daff',
+    urlBarBg: '#1c1e2b',
+    urlBarText: '#e2e5ff',
+    tabBarBg: '#131421',
+    tabBarBorder: '#2f3350',
+    ubBg: '#0f1020cc',
+    ubHover: '#5560a43d',
+    tooltipBg: '#1d1f2d',
+    tooltipText: '#e2e5ff',
+    hoverBg: '#5560a448',
+    activeBg: '#9db4ff3d',
+    quickModalBgColor: '#24263a',
+    loadingSrBgColor: '#090a12',
+    loadingIconBack: '#5560a433',
+    loadingIconFront: '#9db4ff',
+    paginationTextColor: '#c5c8e6',
+    paginationBorderColor: '#ffffff1c',
+    paginationBgColor: '#1a1b29',
+    paginationSelectedColor: '#7f89d9',
+    themeName: 'stellarTheme',
+  },
+},
+
   {
     option: 'Light',
     value: {
@@ -537,16 +576,50 @@ export const prConfig = [
       prType: 'uv',
     },
   },
-  /*{
-    option: 'Ultraviolet V1 only',
-    value: {
-      prType: 'uv1',
-    },
-  },*/
   {
     option: 'Scramjet only',
     value: {
       prType: 'scr',
     },
   },
+];
+
+export const designConfig = [
+  {
+    option: 'Dots',
+    value: {
+      bgDesign: 'dots',
+      getCSS: (color) => `radial-gradient(circle, rgba(${color},0.112) 3px, transparent 1px)`
+    }
+  },
+  {
+    option: 'Stripes',
+    value: {
+      bgDesign: 'diagonalStripes',
+      getCSS: (color) => `
+        repeating-linear-gradient(
+          45deg,
+          rgba(${color},0.15),
+          rgba(${color},0.15) 2px,
+          transparent 2px,
+          transparent 8px
+        )`
+    }
+  },
+  {
+    option: 'Griddy',
+    value: {
+      bgDesign: 'grid',
+      getCSS: (color) => `
+        linear-gradient(to right, rgba(${color},0.2) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(${color},0.2) 1px, transparent 1px)
+      `
+    }
+  },
+  {
+    option: 'None',
+    value: {
+      bgDesign: 'none',
+    }
+  }
 ];

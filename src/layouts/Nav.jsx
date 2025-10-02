@@ -7,32 +7,37 @@ import nav from '../styles/nav.module.css';
 import theme from '../styles/theming.module.css';
 import clsx from 'clsx';
 import Logo from '../components/Logo';
+import { memo, useMemo, useCallback } from 'react';
 
 const version = pkg.version;
 const itemSize = 16;
 
 const navItems = [
-  { name: 'Apps',id: 'btn-a', type: LayoutGrid, route: '/materials' },
-  { name: 'Games',id: 'btn-g', type: Gamepad2,   route: '/docs' },
-  { name: 'Settings',id: 'btn-s', type: Cog,  route: '/settings' },
+  { name: 'Apps', id: 'btn-a', type: LayoutGrid, route: '/materials' },
+  { name: 'Games', id: 'btn-g', type: Gamepad2, route: '/docs' },
+  { name: 'Settings', id: 'btn-s', type: Cog, route: '/settings' },
 ];
 
-const Nav = () => {
+const Nav = memo(() => {
   const navigate = useNavigate();
   const { options } = useOptions();
+  
   const scale = Number(options.navScale || 1);
-  const navHeight = Math.round(69 * scale);
-  const logoWidth = Math.round(122 * scale);
-  const logoHeight = Math.round(41 * scale);
-  const versionWidth = Math.max(24, 40 * scale);
-  const versionFont = Math.round(9 * scale);
-  const versionMargin = Math.round(-10 * scale); 
-
-  const items = navItems.map((item) => ({
+  const dimensions = useMemo(() => ({
+    navHeight: Math.round(69 * scale),
+    logoWidth: Math.round(122 * scale),
+    logoHeight: Math.round(41 * scale),
+    versionFont: Math.round(9 * scale),
+    versionMargin: Math.round(-10 * scale)
+  }), [scale]);
+  
+  const handleLogoClick = useCallback(() => navigate('/'), [navigate]);
+  
+  const items = useMemo(() => navItems.map((item) => ({
     ...item,
     size: itemSize,
     onClick: () => navigate(item.route),
-  }));
+  })), [navigate]);
 
   return (
     <div
@@ -40,21 +45,22 @@ const Nav = () => {
         nav.nav,
         theme['nav-backgroundColor'],
         theme[`theme-${options.theme || 'default'}`],
-        'backdrop-blur-xs w-full shadow-x1/20 flex items-center pl-6 pr-5 gap-5 z-50',
+        ' w-full shadow-x1/20 flex items-center pl-6 pr-5 gap-5 z-50',
       )}
-      style={{ height: `${navHeight}px` }}
+      style={{ height: `${dimensions.navHeight}px` }}
     >
       <Logo
-        width={logoWidth}
-        height={logoHeight}
-        action={() => navigate('/')}
+        width={dimensions.logoWidth}
+        height={dimensions.logoHeight}
+        action={handleLogoClick}
       />
       <div
         className="border rounded-full text-center"
         style={{
-          width: `${versionWidth}px`,
-          fontSize: `${versionFont}px`,
-          marginLeft: `${versionMargin}px`,
+          fontSize: `${dimensions.versionFont}px`,
+          marginLeft: `${dimensions.versionMargin}px`,
+          paddingLeft: '0.3rem',
+          paddingRight: '0.3rem',
         }}
       >
         v{version}
@@ -67,6 +73,7 @@ const Nav = () => {
       </div>
     </div>
   );
-};
+});
 
+Nav.displayName = 'Nav';
 export default Nav;

@@ -1,14 +1,10 @@
-/*
-    A better-working version of my previous glow library but for React components
-*/
-
 "use client"
 
-import { useEffect, useRef, useState, useCallback, useMemo } from "react"
+import { useEffect, useRef, useState, useCallback, useMemo, memo } from "react"
 
 const throttle = (func, limit) => {
   let inThrottle
-  return function (...args) {
+  return (...args) => {
     if (!inThrottle) {
       func.apply(this, args)
       inThrottle = true
@@ -45,9 +41,9 @@ export function useConfinedGlow(options = {}) {
       filter: `blur(${config.blur}px)`,
       transition: `opacity ${config.transition}ms ease-out`,
       willChange: "transform, opacity",
-      transform: "translate3d(-50%, -50%, 0)", // hardware accelaration
+      transform: "translate3d(-50%, -50%, 0)",
     }),
-    [config],
+    [config.size, config.color, config.opacity, config.blur, config.transition],
   )
 
   const updateGlowPos = useCallback(

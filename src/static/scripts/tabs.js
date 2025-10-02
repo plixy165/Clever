@@ -555,6 +555,7 @@ window.addEventListener('load', async () => {
     { path: '/s_sw.js', scope: '/scramjet/' },
     { path: '/uv/sw.js' },
   ];
+  
   for (const sw of sws) {
     try {
       await navigator.serviceWorker.register(sw.path, sw.scope ? { scope: sw.scope } : undefined);
@@ -562,6 +563,8 @@ window.addEventListener('load', async () => {
       warn(`SW reg err (${sw.path}):`, err);
     }
   }
+
+  await setTransport();
 
   let tabManager;
   try {

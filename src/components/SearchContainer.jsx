@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LucideSearch, Earth } from 'lucide-react';
 import { GlowWrapper } from '../utils/Glow';
@@ -8,7 +8,7 @@ import Logo from '../components/Logo';
 import theme from '../styles/theming.module.css';
 import 'movement.css';
 
-export default function SearchContainer({ logo = true, cls, nav = true }) {
+const SearchContainer = memo(function SearchContainer({ logo = true, cls, nav = true }) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const debounceRef = useRef(null);
@@ -42,7 +42,7 @@ export default function SearchContainer({ logo = true, cls, nav = true }) {
     }
   }, []);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = useCallback((e) => {
     const newQuery = e.target.value;
     setQuery(newQuery);
 
@@ -54,9 +54,9 @@ export default function SearchContainer({ logo = true, cls, nav = true }) {
     }
 
     debounceRef.current = setTimeout(() => fetchResults(newQuery), 300);
-  };
+  }, [fetchResults]);
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = useCallback((e) => {
     if (e.key !== 'Enter') return;
     const trimmed = query.trim();
     if (!trimmed) return;
@@ -67,16 +67,16 @@ export default function SearchContainer({ logo = true, cls, nav = true }) {
     } else {
       window.parent.tabManager.navigate(trimmed);
     }
-  };
+  }, [query, nav, navigate]);
 
-  const handleResultClick = (phrase) => {
+  const handleResultClick = useCallback((phrase) => {
     if (nav) {
       sessionStorage.setItem('query', phrase);
       navigate('/indev');
     } else {
       window.parent.tabManager.navigate(phrase);
     }
-  };
+  }, [nav, navigate]);
 
   useEffect(() => {
     return () => debounceRef.current && clearTimeout(debounceRef.current);
@@ -173,4 +173,6 @@ export default function SearchContainer({ logo = true, cls, nav = true }) {
       </GlowWrapper>
     </div>
   );
-}
+});
+
+export default SearchContainer;

@@ -2,16 +2,18 @@ import Nav from '../layouts/Nav';
 import Search from '../components/SearchContainer';
 import Footer from '../components/Footer';
 import QuickLinks from '../components/QuickLinks';
-// import Update from '../components/Update';
+import { memo } from 'react';
 
-export default function Home() {
+const Home = memo(() => {
   return (
     <>
       <Nav />
       <Search />
       <QuickLinks />
       <Footer />
-      {/*<Update />*/}
     </>
   );
-}
+});
+
+Home.displayName = 'Home';
+export default Home;

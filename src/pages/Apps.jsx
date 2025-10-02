@@ -1,5 +1,7 @@
 import AppLayout from '../layouts/Apps';
+import { memo } from 'react';
 
-const Apps = () => <AppLayout type="apps" />;
+const Apps = memo(() => <AppLayout type="apps" />);
 
+Apps.displayName = 'Apps';
 export default Apps;

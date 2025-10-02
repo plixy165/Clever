@@ -41,7 +41,6 @@ const Setting = ({ setting }) => {
   const Container = ({ children }) => (
     <div
       className={clsx(
-        theme[`settings-contentColor`],
         theme[`theme-${options.theme || 'default'}`],
         'flex flex-1 flex-col gap-7 overflow-y-auto p-10',
         scroll

@@ -1,9 +1,15 @@
 import { useOptions } from '../utils/optionsContext';
 import Disc from './Discord';
 import clsx from 'clsx';
+import { memo, useCallback } from 'react';
 
-const Footer = () => {
+const Footer = memo(() => {
   const { options } = useOptions();
+  
+  const handleDiscordClick = useCallback(() => {
+    window.open('/ds', '_blank');
+  }, []);
+  
   return (
       <div className="w-full fixed bottom-0 flex items-end justify-between p-2">
         <div
@@ -11,7 +17,7 @@ const Footer = () => {
             'flex gap-1 items-center cursor-pointer',
             'hover:-translate-y-0.5 duration-200',
           )}
-          onClick={() => window.open('/ds', '_blank')}
+          onClick={handleDiscordClick}
         >
           <Disc className="w-4" fill={options.siteTextColor || "#a0b0c8"} />
           Discord
@@ -27,6 +33,7 @@ const Footer = () => {
         )}
       </div>
   );
-};
+});
 
+Footer.displayName = 'Footer';
 export default Footer;

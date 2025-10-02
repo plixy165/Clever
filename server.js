@@ -29,7 +29,10 @@ server.on("upgrade", (req, sock, head) =>
 const app = Fastify({
   serverFactory: h => (server.on("request", (req,res) =>
     bare?.shouldRoute(req) ? bare.routeRequest(req,res) : h(req,res)), server),
-  logger: false
+  logger: false,
+  keepAliveTimeout: 30000,
+  connectionTimeout: 60000,
+  forceCloseConnections: true
 });
 
 await app.register(fastifyCookie);
@@ -37,7 +40,12 @@ await app.register(fastifyCookie);
 app.register(fastifyStatic, {
   root: join(import.meta.dirname, "dist"),
   prefix: "/",
-  decorateReply: true
+  decorateReply: true,
+  maxAge: 86400000,
+  immutable: true,
+  cacheControl: true,
+  etag: true,
+  lastModified: true
 });
 
 if (process.env.MASQR === "true")
