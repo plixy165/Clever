@@ -74,7 +74,6 @@ export default defineConfig(({ command }) => {
               normalizePath(resolve(uvPath, 'uv.handler.js')),
               normalizePath(resolve(uvPath, 'uv.client.js')),
               normalizePath(resolve(uvPath, 'uv.bundle.js')),
-              normalizePath(resolve(uvPath, 'uv.sw.js')),
               normalizePath(resolve(uvPath, 'sw.js')),
             ],
             dest: 'uv',
@@ -122,7 +121,10 @@ export default defineConfig(({ command }) => {
       }
     ],
     build: {
-      esbuild: { legalComments: 'none' },
+      esbuild: { 
+        legalComments: 'none',
+        treeShaking: true
+      },
       rollupOptions: {
         input: {
           main: resolve(__dirname, 'index.html'),
@@ -131,11 +133,16 @@ export default defineConfig(({ command }) => {
         output: {
           entryFileNames: '[hash].js',
           chunkFileNames: (chunk) =>
-            chunk.name === 'vendor-modules' ? 'chunks/vendor-modules.js' : 'chunks/[hash].js',
+            chunk.name === 'vendor-modules' ? 'chunks/vendor-modules.[hash].js' : 'chunks/[hash].js',
           assetFileNames: 'assets/[hash].[ext]',
           manualChunks: (id) => (id.includes('node_modules') ? 'vendor-modules' : undefined),
         },
+        treeshake: {
+          moduleSideEffects: 'no-external'
+        }
       },
+      minify: 'esbuild',
+      sourcemap: false
     },
     css: {
       modules: {

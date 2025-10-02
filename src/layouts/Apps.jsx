@@ -1,5 +1,5 @@
 import Nav from '../layouts/Nav';
-import { useState, useMemo, useRef, useEffect, useCallback } from 'react';
+import { useState, useMemo, useRef, useEffect, useCallback, memo } from 'react';
 import { Search, ChevronDown, LayoutGrid } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useOptions } from '/src/utils/optionsContext';
@@ -15,8 +15,9 @@ const SORT_OPTIONS = [
   { value: 'newest', label: 'Newest' },
 ];
 
-const Apps = ({ type = 'default', data = appsData, options }) => {
+const Apps = memo(({ type = 'default', data = appsData }) => {
   const nav = useNavigate();
+  const { options } = useOptions();
   const appsList = useMemo(() => data[type] || [], [data, type]);
 
   const [q, setQ] = useState('');
@@ -69,12 +70,22 @@ const Apps = ({ type = 'default', data = appsData, options }) => {
     nav('/indev');
   }, [nav]);
 
+  const handleSearch = useCallback((e) => {
+    setQ(e.target.value);
+    setPage(1);
+  }, []);
+
   const handleImgError = useCallback(
     (name) => setFallback((prev) => ({ ...prev, [name]: true })),
     []
   );
 
-  const searchBarCls = useMemo(() => clsx(theme.appsSearchColor, theme[`theme-${options.theme || 'default'}`]), [options.theme]);
+  const searchBarCls = useMemo(() => clsx(
+    theme.appsSearchColor, 
+    theme[`theme-${options.theme || 'default'}`]
+  ), [options.theme]);
+
+  const placeholder = useMemo(() => `Search ${appsList.length} ${type}`, [appsList.length, type]);
 
   return (
     <div className={`${styles.appContainer} w-full mx-auto`}>
@@ -83,9 +94,9 @@ const Apps = ({ type = 'default', data = appsData, options }) => {
           <Search className="w-4 h-4 shrink-0" />
           <input
             type="text"
-            placeholder={`Search ${appsList.length} ${type}`}
+            placeholder={placeholder}
             value={q}
-            onChange={(e) => { setQ(e.target.value); setPage(1); }}
+            onChange={handleSearch}
             className="flex-1 bg-transparent outline-none text-sm"
           />
           {type !== 'apps' && (
@@ -174,7 +185,9 @@ const Apps = ({ type = 'default', data = appsData, options }) => {
       )}
     </div>
   );
-};
+});
+
+Apps.displayName = 'Apps';
 
 const AppLayout = ({ type }) => {
   const { options } = useOptions();
@@ -189,7 +202,7 @@ const AppLayout = ({ type }) => {
     <div className="flex flex-col h-screen overflow-hidden">
       <Nav />
       <div className={clsx('flex-1 overflow-y-auto', scrollCls)}>
-        <Apps type={type} options={options} />
+        <Apps type={type} />
       </div>
     </div>
   );

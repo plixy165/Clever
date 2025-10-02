@@ -28,7 +28,6 @@
   --search-color: #ecf6ff;
   --settings-panel: #141d2b;
   --settings-border: #233046;
-  --settings-content: #121b29;
   --apps-bg: #141d2b;
   --apps-border: #1f324e;
   --apps-text: #ecf6ff;
@@ -46,7 +45,6 @@
   --search-color: #ecf6ff;
   --settings-panel: #1f1817;
   --settings-border: #362f2f;
-  --settings-content: #1a1414;
   --apps-bg: #291e1e;
   --apps-border: #3b2e2e;
   --apps-text: #ecf6ff;
@@ -64,7 +62,6 @@
   --search-color: #ecf6ff;
   --settings-panel: #121214;
   --settings-border: #27272a;
-  --settings-content: #0f0f12;
   --apps-bg: #151519;
   --apps-border: #2a2a2f;
   --apps-text: #f8fafc;
@@ -82,7 +79,6 @@
   --search-color: #1a1a1a;
   --settings-panel: #f8fafc;
   --settings-border: #e5e7eb;
-  --settings-content: #f3f4f6;
   --apps-bg: #ffffffb3;
   --apps-border: #e5e7eb;
   --apps-text: #111827;
@@ -100,13 +96,29 @@
   --search-color: #ecf6ff;
   --settings-panel: #121d16;
   --settings-border: #2a4937;
-  --settings-content: #0f1a13;
   --apps-bg: #15261c;
   --apps-border: #2f4f3c;
   --apps-text: #ecfff3;
   --apps-ph: #a9cbb6;
   --item-bg: #15261c;
   --item-border: #2f4f3c;
+}
+
+.theme-stellar {
+  --nav-bg: #02030ecc;
+  --nav-border: #2f3350;
+  --search-border: #232538;
+  --search-bg: #171927;
+  --search-ph: #adb2e1;
+  --search-color: #e2e5ff;
+  --settings-panel: #151624;
+  --settings-border: #2d2f44;
+  --apps-bg: #181a26;
+  --apps-border: #2d2f44;
+  --apps-text: #d6daff;
+  --apps-ph: #acb0d1;
+  --item-bg: #1d1f2d;
+  --item-border: #08090f;
 }
 
 .theme-paper {
@@ -118,7 +130,6 @@
   --search-color: #1a1a1a;
   --settings-panel: #faf4e6;
   --settings-border: #ebe3cd;
-  --settings-content: #f7f1e3;
   --apps-bg: #fffcf3;
   --apps-border: #eae1ca;
   --apps-text: #1f2937;
@@ -155,10 +166,6 @@
 .settings-panelColor {
   background-color: var(--settings-panel);
   border-right: 1px solid var(--settings-border);
-}
-
-.settings-contentColor {
-  background-color: var(--settings-content);
 }
 
 .appsSearchColor {

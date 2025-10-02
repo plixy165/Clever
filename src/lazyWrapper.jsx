@@ -11,9 +11,10 @@ const lazyWrapper = (importFn) => {
       })
       .catch((err) => {
         NProgress.done();
+        console.error('Lazy loading failed:', err);
         throw err;
       });
   });
 };
 
-export default lazyWrapper
+export default lazyWrapper;

@@ -5,7 +5,7 @@
         const options = JSON.parse(localStorage.getItem("options") || "{}");
 
         const css = `
-          body { color: ${options.bodyText || "#acbed8"}; background-color: red; }
+          body { color: ${options.bodyText || "#acbed8"}; }
           #url input::placeholder { color: ${options.urlBarText}; }
           #d-url { background-color: ${options.urlBarBg || "#1d303f"}; color: ${options.urlBarText || "#dce7ff"}; }
           #tb { background-color: ${options.tabBarBg || "#1e2a3a"}; border-color: ${options.tabBarBorder || "#3a4a5c"}; }
@@ -75,6 +75,7 @@
         font-family: "Geist";
         font-size: 14px;
         font-weight: 500;
+        background-color: black;
       }
 
       .tooltip {

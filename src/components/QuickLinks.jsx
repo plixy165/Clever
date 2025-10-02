@@ -118,4 +118,5 @@ const QuickLinks = ({ cls, nav = true }) => {
   );
 };
 
+QuickLinks.displayName = 'QuickLinks';
 export default QuickLinks;

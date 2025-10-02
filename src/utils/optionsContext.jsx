@@ -1,40 +1,52 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
 
 const OptionsContext = createContext();
 
+const getStoredOptions = () => {
+  try {
+    return JSON.parse(localStorage.getItem("options") || "{}");
+  } catch {
+    return {};
+  }
+};
+
 export const OptionsProvider = ({ children }) => {
-  const [options, setOptions] = useState(() => {
-    const saved = JSON.parse(localStorage.getItem("options") || "{}");
-    return { ...saved };
-  });
+  const [options, setOptions] = useState(getStoredOptions);
 
   useEffect(() => {
-    localStorage.setItem("options", JSON.stringify(options));
+    try {
+      localStorage.setItem("options", JSON.stringify(options));
+    } catch {}
   }, [options]);
 
-  /**
-   * @param {Object} obj - options to merge
-   * @param {boolean} immediate - if true, update state immediately; false = only localStorage
-   */
-  const updateOption = (obj, immediate = true) => {
+  const updateOption = useCallback((obj, immediate = true) => {
     if (!obj || typeof obj !== "object") return;
 
-    const current = JSON.parse(localStorage.getItem("options") || "{}");
+    const current = getStoredOptions();
     const updated = { ...current, ...obj };
-    localStorage.setItem("options", JSON.stringify(updated));
+    
+    try {
+      localStorage.setItem("options", JSON.stringify(updated));
+    } catch {}
 
     if (immediate) {
-      setTimeout(() => {
-        setOptions((prev) => ({ ...prev, ...obj }));
-      }, 0);
+      setOptions(prev => ({ ...prev, ...obj }));
     }
-  };
+  }, []);
+
+  const contextValue = useMemo(() => ({ options, updateOption }), [options, updateOption]);
 
   return (
-    <OptionsContext.Provider value={{ options, updateOption }}>
+    <OptionsContext.Provider value={contextValue}>
       {children}
     </OptionsContext.Provider>
   );
 };
 
-export const useOptions = () => useContext(OptionsContext);
+export const useOptions = () => {
+  const context = useContext(OptionsContext);
+  if (!context) {
+    throw new Error('useOptions must be used within an OptionsProvider');
+  }
+  return context;
+};
